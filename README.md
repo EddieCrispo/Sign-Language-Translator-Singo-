@@ -161,6 +161,7 @@ cv2.destroyAllWindows()
 | Matplotlib  | 3.6.0   |
 | Numpy       | 1.23.3  |
 | Python      | 3.10.6  |
+| Scikit-learn| 1.1.2   |
 
 ## Reference datasets
 * [American Sign Language Dataset
