@@ -3,14 +3,11 @@ Sign Language Translator - Singo (Sign and Go)
 
 Our project aims to create a **Sign Language Translator App** to improve communication for the deaf and hard of hearing. The problem statement is the difficulty in communicating with non-signers, which can lead to social isolation and limited access to information. Our research questions include what features would be most beneficial to users and how to improve accuracy and ease of use. Background information includes the prevalence of hearing loss and the lack of accessible communication options. Our team wants to tackle this problem because we believe **that everyone deserves equal access to information and communication**. Using design thinking, we aim to build a painkiller app that solves a significant problem for our users.
 
-## Reference datasets
-* [American Sign Language Dataset
-](https://www.kaggle.com/datasets/ayuraj/asl-dataset) This dataset can be used to apply the ideas of multi class classification using the technology of your choice.
-* [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist)  This dataset was inspired by the Fashion-MNIST 2 and the machine learning pipeline for gestures by Sreehari 4.
-* [Datasets SIBI Sign Language Alphabets](https://www.kaggle.com/datasets/mlanangafkaar/datasets-lemlitbang-sibi-alphabets)  Indonesian Sign Language Alphabets Sign Language Datasets (Sistem Isyarat Bahasa Indonesia)
-
 ## Dataset Used
 * [SIBI Dataset](https://drive.google.com/drive/folders/1EqzDDzEymQhqP6DFjMg1ecPbRZvQ2uq9?usp=share_link) This data is the result of self-made with reference to the datasets above and also the help of OpenCv and Mediapipe as a tool to generate images, with a total number of training data 2,210 images, 520 validation data and 104 test data images.
+
+### SIBI sign language gesture
+![SIBI gesture](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-/blob/main/Machine-learning/dataset/abjad%20SIBI.jpg)
 
 ### How we create our own data
 
@@ -150,6 +147,9 @@ cv2.destroyAllWindows()
 
 ### Result of the saved image 
 
+| A | B | C |
+| - | - | - |
+| ![A](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-/blob/main/Machine-learning/dataset/Train/A/image_A_(1685164029.961901).jpg) | ![B](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-/blob/main/Machine-learning/dataset/Test/B/image_B_(1685193326.274505).jpg)  | ![C](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-/blob/main/Machine-learning/dataset/Test/C/image_C_(1685193348.742896).jpg) |
 
 ## Requirements
 
@@ -161,6 +161,12 @@ cv2.destroyAllWindows()
 | Matplotlib  | 3.6.0   |
 | Numpy       | 1.23.3  |
 | Python      | 3.10.6  |
+
+## Reference datasets
+* [American Sign Language Dataset
+](https://www.kaggle.com/datasets/ayuraj/asl-dataset) This dataset can be used to apply the ideas of multi class classification using the technology of your choice.
+* [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist)  This dataset was inspired by the Fashion-MNIST 2 and the machine learning pipeline for gestures by Sreehari 4.
+* [Datasets SIBI Sign Language Alphabets](https://www.kaggle.com/datasets/mlanangafkaar/datasets-lemlitbang-sibi-alphabets)  Indonesian Sign Language Alphabets Sign Language Datasets (Sistem Isyarat Bahasa Indonesia).
 
 ## Developers
 - Muhammad Zidan R. (EddieCrispo)
