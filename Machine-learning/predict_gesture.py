@@ -1,8 +1,8 @@
 # Mengimpor modul cv2
+import cv2
 import mediapipe as mp
 import numpy as np
-import cv2
-import time
+from predict_label import predicted_label
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -21,12 +21,6 @@ connection_spec = mp_drawing.DrawingSpec(color=(255, 255, 255))
 img_size = 224
 offset = 50
 
-target_save_dir = "./sample_image"
-img_name = "image_A"
-counter = 0
-
-target_amount = 4
-
 cap = cv2.VideoCapture(0)
 while True:
   ret, img = cap.read()
@@ -44,7 +38,6 @@ while True:
     )
 
     points = []
-    
     for data_point in hand_landmarks.landmark:
       points.append([data_point.x * img.shape[1], data_point.y * img.shape[0]])
     x,y,w,h = cv2.boundingRect(np.array(points).astype('float32'))
@@ -54,18 +47,17 @@ while True:
     if np.any(img_crop):
       img_crop = cv2.resize(img_crop, (img_size, img_size))
       img_white[0:img_size, 0:img_size] = img_crop
-      cv2.imshow("img_white", img_white)
-      
-      key = cv2.waitKey(1) & 0xFF
-      if key == ord('s'):
-        counter += 1
-        cv2.imwrite(f"{target_save_dir}/{img_name}_({time.time()}).jpg", img_white)
-        print(counter)
+      label = predicted_label(img_white)
+
+      # cv2.imshow("img_white", img_white)
+      cv2.rectangle(img_output, (x+30, y-30), (x + 100, y - 85), (255, 0, 255), cv2.FILLED)
+      cv2.putText(img_output, label, (x+50, y-50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+      cv2.rectangle(img_output, (x-offset + 20, y-offset + 20), (x + w+offset - 20, y + h + offset - 20), (255, 0, 255), 4)
 
   cv2.imshow("Original", img_output)
 
   key = cv2.waitKey(1) & 0xFF
-  if key == ord('q') or counter == target_amount:
+  if key == ord('q'):
     break
 
 cap.release()
