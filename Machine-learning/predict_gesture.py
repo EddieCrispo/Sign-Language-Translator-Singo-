@@ -74,9 +74,10 @@ while True:
       cv2.putText(img_output, label, (x+50, y-50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
       # Draw another rectangle around the cropped area on the output frame
       cv2.rectangle(img_output, (x-offset + 20, y-offset + 20), (x + w+offset - 20, y + h + offset - 20), (255, 0, 255), 4)
-
+      
   # Show the output frame in a window named "Original"
   cv2.imshow("Original", img_output)
+
 
   # Wait for a key press and check if it is 'q'
   key = cv2.waitKey(1) & 0xFF
