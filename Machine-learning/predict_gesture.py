@@ -5,7 +5,7 @@ import numpy as np
 from predict_label import predicted_label
 # ==============================================================================
 import time
-from autocorecction import correct_sentence
+from autocorrection import correct_sentence
 # ==============================================================================
 
 # Define drawing specifications for landmarks and connections
