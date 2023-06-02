@@ -42,7 +42,7 @@ delay = 1
 # Create a variable to store the last time gesture_text was changed
 last_correction_time = time.time()
 # Create a variable to store the delay before clearing gesture_text
-clear_delay = 1  # Adjust the delay as needed (dalam detik)
+clear_delay = 0.5  # Adjust the delay as needed (dalam detik)
 # Create a variable to store the flag for clearing gesture_text
 should_clear_text = False
 # ==============================================================================
@@ -62,6 +62,26 @@ while True:
   # ==============================================================================
   
   results = detector.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+
+  # ==============================================================================
+  # Check if there are no hand landmarks detected
+  if not results.multi_hand_landmarks:
+    # Check if gesture_text is not empty
+    if gesture_text != "":
+        # Try to correct gesture_text using correction function
+        corrected_text = correct_sentence(gesture_text)
+
+        # Check if corrected_text is different from gesture_text and not empty
+        if corrected_text != gesture_text and corrected_text != "":
+            # Replace gesture_text with corrected_text
+            gesture_text = corrected_text
+
+            # Update the last_correction_time
+            last_correction_time = time.time()
+
+            # Set the flag for clearing gesture_text
+            should_clear_text = True
+  # ==============================================================================
 
   # If there are any hand landmarks detected in the frame
   if results.multi_hand_landmarks:
@@ -140,30 +160,17 @@ while True:
   if key == ord('q'):
     # Break out of the loop and stop capturing frames
     break
-  
+    
+  # ==============================================================================
   if key == ord('c'):
     # Clear gesture_text 
     gesture_text = ""
-
-  if key == ord('r'): # new condition added here 
-    # Try to correct gesture_text using correction function 
-    corrected_text = correct_sentence(gesture_text)
-
-    # Check if corrected_text is different from gesture_text and not empty
-    if corrected_text != gesture_text and corrected_text != "":
-        # Replace gesture_text with corrected_text
-        gesture_text = corrected_text
-
-        # Update the last_correction_time
-        last_correction_time = time.time()
-
-        # Set the flag for clearing gesture_text
-        should_clear_text = True
       
   # Check if gesture_text should be cleared
   if should_clear_text and time.time() - last_correction_time > clear_delay:
       gesture_text = ""
       should_clear_text = False
+  # ==============================================================================
   
 # Release the webcam and close all windows
 cap.release()
