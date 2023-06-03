@@ -4,7 +4,7 @@ Sign Language Translator - Singo (Sign and Go)
 Our project aims to create a **Sign Language Translator App** to improve communication for the deaf and hard of hearing. The problem statement is the difficulty in communicating with non-signers, which can lead to social isolation and limited access to information. Our research questions include what features would be most beneficial to users and how to improve accuracy and ease of use. Background information includes the prevalence of hearing loss and the lack of accessible communication options. Our team wants to tackle this problem because we believe **that everyone deserves equal access to information and communication**. Using design thinking, we aim to build a painkiller app that solves a significant problem for our users.
 
 ## Dataset Used
-* [SIBI Dataset](https://drive.google.com/drive/folders/1EqzDDzEymQhqP6DFjMg1ecPbRZvQ2uq9?usp=share_link) This data is the result of self-made with reference to the datasets above and also the help of OpenCv and Mediapipe as a tool to generate images, with a total number of training data 2,210 images, 520 validation data and 104 test data images.
+* [SIBI Dataset](https://drive.google.com/drive/folders/1EqzDDzEymQhqP6DFjMg1ecPbRZvQ2uq9?usp=share_link) This data is the result of self-made with reference to the datasets above and also the help of OpenCv and Mediapipe as a tool to generate images, with a total number of training data 4,590 images, 1,350 validation data and 243 test data images, with 27 labels include (space character).
 
 ### SIBI sign language gesture
 ![SIBI gesture](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-/blob/main/Machine-learning/dataset/abjad%20SIBI.jpg)
