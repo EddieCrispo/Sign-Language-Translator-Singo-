@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 # Define a list of categories based on ASCII codes
-CATEGORIES = [chr(i + 65) for i in range(26)]
+CATEGORIES = [chr(i + 65) for i in range(26)] + ['spasi']
 
 # Load the trained model
 model = tf.keras.models.load_model('./result/best_model.h5')
