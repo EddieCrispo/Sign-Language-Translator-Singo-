@@ -72,7 +72,7 @@ while True:
         corrected_text = correct_sentence(gesture_text)
 
         # Check if corrected_text is different from gesture_text and not empty
-        if corrected_text != gesture_text and corrected_text != "":
+        if (corrected_text != gesture_text and corrected_text != ""):
             # Replace gesture_text with corrected_text
             gesture_text = corrected_text
 
@@ -118,11 +118,31 @@ while True:
       # Predict the label of the white image using a custom function from another module
       label = predicted_label(img_white)
 
-      # Draw a rectangle and put text on the output frame to show the label
-      cv2.rectangle(img_output, (x+30, y-30), (x + 100, y - 85), (255, 0, 255), cv2.FILLED)
-      cv2.putText(img_output, label, (x+50, y-50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-      # Draw another rectangle around the cropped area on the output frame
-      cv2.rectangle(img_output, (x-offset + 20, y-offset + 20), (x + w+offset - 20, y + h + offset - 20), (255, 0, 255), 4)
+      # ==============================================================================
+      # Check if the label is 'spasi'
+      if label == 'spasi':
+        if gesture_text != "":
+            # Try to correct gesture_text using correction function
+            corrected_text = correct_sentence(gesture_text)
+
+            # Check if corrected_text is different from gesture_text and not empty
+            if (corrected_text != gesture_text and corrected_text != ""):
+                # Replace gesture_text with corrected_text
+                gesture_text = corrected_text
+
+                # Update the last_correction_time
+                last_correction_time = time.time()
+
+                # Set the flag for clearing gesture_text
+                should_clear_text = True
+      # ==============================================================================
+
+      if label != 'spasi':
+        # Draw a rectangle and put text on the output frame to show the label
+        cv2.rectangle(img_output, (x+30, y-30), (x + 100, y - 85), (255, 0, 255), cv2.FILLED)
+        cv2.putText(img_output, label, (x+50, y-50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+        # Draw another rectangle around the cropped area on the output frame
+        cv2.rectangle(img_output, (x-offset + 20, y-offset + 20), (x + w+offset - 20, y + h + offset - 20), (255, 0, 255), 4)
       
       # ==============================================================================
       # Get current time 
@@ -130,7 +150,7 @@ while True:
       # Check if difference between current_time and last_time is greater than delay 
       if current_time - last_time > delay:
           # Add label to gesture_text if it is empty or 
-        if gesture_text == "" or gesture_text[-1] != label.lower():
+        if (gesture_text == "" or gesture_text[-1] != label.lower()) and label != 'spasi':
           gesture_text += label.lower()
         # Update last_time 
         last_time = current_time
@@ -148,7 +168,6 @@ while True:
     gesture_text = ""
     
   else:
-    # Write gesture_text on top of the white box with black color 
     cv2.putText(img_output ,gesture_text.upper(),(10,img.shape[0]-text_box_height//2),cv2.FONT_HERSHEY_COMPLEX_SMALL ,1 , text_color ,2)
   # ==============================================================================
   
