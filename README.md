@@ -1,5 +1,13 @@
 # Sign-Language-Translator-Singo-
+
+## Introduction
 Sign Language Translator - Singo (Sign and Go)
+
+Sign language is a visual gesture-based language that serves as the primary means of communication for people who are deaf, hard of hearing, or unable to speak or hear. Sign language varies across regions and countries, reflecting the linguistic and cultural diversity of the world. For example, there are American Sign Language (ASL), British Sign Language (BSL), and Indonesian Sign Language (SIBI), among others. Each sign language has its own vocabulary, grammar, and syntax, as well as its own way of using hand shapes, movements, facial expressions, and body postures to convey meaning. Sign language is not only important for the deaf and hard of hearing community, but also for people with other disabilities, such as autism, who may benefit from visual communication.
+
+However, sign language faces many challenges in terms of recognition, interpretation, and education. Most people who use spoken and written languages do not understand sign language, creating a communication gap between them and the sign language users. This gap can lead to social exclusion, discrimination, and lack of access to information and services for the deaf and hard of hearing community. Moreover, sign language recognition is a complex and difficult task for computer vision and machine learning techniques, due to the variability and ambiguity of signs, the presence of noise and occlusion in the images, and the lack of standardized and large-scale datasets for different sign languages.
+
+[According to the World Health Organization (WHO), over 5% of the world’s population suffers from disabling hearing loss](https://joshuaproject.net/people_groups/19007/ID). [In Indonesia, there are about 2.5 million deaf or mute people](https://www.who.int/health-topics/hearing-loss#tab=tab_2), [which is about 1% of the total population.](https://www.audicus.com/world-wide-hearing-loss-stats-from-around-the-world/) In Semarang, a city in Central Java province, there are about 25 thousand deaf or mute people, which is about 1.4% of the city’s population. These numbers indicate the need for effective sign language recognition systems that can help the deaf and hard of hearing community in Indonesia to communicate with others and access information and services.
 
 Our project aims to create a **Sign Language Translator App** to improve communication for the deaf and hard of hearing. The problem statement is the difficulty in communicating with non-signers, which can lead to social isolation and limited access to information. Our research questions include what features would be most beneficial to users and how to improve accuracy and ease of use. Background information includes the prevalence of hearing loss and the lack of accessible communication options. Our team wants to tackle this problem because we believe **that everyone deserves equal access to information and communication**. Using design thinking, we aim to build a painkiller app that solves a significant problem for our users.
 
@@ -154,11 +162,11 @@ cv2.destroyAllWindows()
 ## Methodology
 Overall, general method of the SLR (Sign Language Recognition) is shown below:
 
-In this project, we aim to build a CNN model that can recognize hand gestures for the letters of the alphabet, which contains 2,834 images of 26 classes (A-Z) of hand gestures. We use transfer learning to reuse a pre-trained model (VGG16) and adapt it to our specific task. We also use data augmentation to increase the diversity and size of our training data. We train and evaluate our model on the training, validation, and test data, and plot and analyze the results.
+In this project, we aim to build a CNN model that can recognize hand gestures for the letters of the alphabet, which contains training data 4,590 images, 1,350 validation data and 243 test data images, with 27 labels (A-Z) include (space character). of hand gestures. We use transfer learning to reuse a pre-trained model (VGG16) and adapt it to our specific task. We also use data augmentation to increase the diversity and size of our training data. We train and evaluate our model on the training, validation, and test data, and plot and analyze the results.
 
 ### Data Preparation
 
-The data is the result of self-made we generated images using `generator_images.py` you can see the file from our repository above in `Machine-learning/generator_images.py`. The dataset contains three subdirectories: Train, Valid, and Test. We use Train as our training data, Valid as our validation data, and Test as our test data. Each subdirectory contains 26 subdirectories (A-Z) that correspond to the classes of hand gestures. Each subdirectory contains images of hand gestures in JPG format.
+The data is the result of self-made we generated images using `generator_images.py` you can see the file from our repository above in `Machine-learning/generator_images.py`. The dataset contains three subdirectories: Train, Valid, and Test. We use Train as our training data, Valid as our validation data, and Test as our test data. Each subdirectory contains 27 subdirectories (A-Z) that correspond to the classes of hand gestures. Each subdirectory contains images of hand gestures in JPG format.
 
 We define some variables for our data paths and parameters, such as:
 
@@ -185,7 +193,7 @@ We then create a new model on top of the base model using `keras.Sequential([])`
 - A flatten layer, which converts the output of the base model into a one-dimensional vector.
 - A dense layer, which is a fully connected layer with 1024 units and relu activation function. This layer will learn some high-level features from the output of the base model.
 - A dropout layer, which randomly drops out some units during training to reduce overfitting.
-- A dense layer, which is another fully connected layer with num_classes units and softmax activation function. This layer will make the final predictions for our 26 classes.
+- A dense layer, which is another fully connected layer with num_classes units and softmax activation function. This layer will make the final predictions for our 27 classes.
 
 We also freeze the base model, which means that we prevent it from being updated during training. This way, we can preserve the features learned from the ImageNet dataset and only update the weights of our new layers.
 
@@ -273,6 +281,17 @@ have't dont yet, Coming Soon.....
 ](https://www.kaggle.com/datasets/ayuraj/asl-dataset) This dataset can be used to apply the ideas of multi class classification using the technology of your choice.
 * [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist)  This dataset was inspired by the Fashion-MNIST 2 and the machine learning pipeline for gestures by Sreehari 4.
 * [Datasets SIBI Sign Language Alphabets](https://www.kaggle.com/datasets/mlanangafkaar/datasets-lemlitbang-sibi-alphabets)  Indonesian Sign Language Alphabets Sign Language Datasets (Sistem Isyarat Bahasa Indonesia).
+
+## Reference
+[Bora, J., Dehingia, S., Boruah, A., Chetia, A. A., Gogoi, D. (2023). Real-time Assamese sign language recognition using MediaPipe and deep learning. Procedia Computer Science, 218, 1384-1393.](https://doi.org/10.1016/j.procs.2023.01.117)
+
+[Islam, M. M., Uddin, M. R., Akhtar, M. N., & Alam, K. M. R. (2022). Recognizing multiclass static sign language words for deaf and dumb people of Bangladesh based on transfer learning techniques. Informatics in Medicine Unlocked, 33, 101077.](https://doi.org/10.1016/j.imu.2022.101077)
+
+[Siddique, S., Islam, S., Neon, E. E., Sabbir, T., Naheen, I. T., & Khan, R. (2023). Deep learning-based Bangla sign language detection with an edge device. Intelligent Systems with Applications, 18, 200224.](https://doi.org/10.1016/j.iswa.2023.200224)
+
+[Sreemathy, R., Turuk, M. P., Chaudhary, S., Lavate, K., Ushire, A., & Khurana, S. (2023). Continuous word level sign language recognition using an expert system based on machine learning. Intelligent Systems with Applications, 18, 200224.](https://doi.org/10.1016/j.ijcce.2023.04.002)
+
+[Suharjito, R. A., Wiryana, F., Ariesta, M. C., & Kusuma, G. P. (2017). Sign language recognition application systems for deaf-mute people: A review based on input-process-output. Procedia Computer Science, 116, 441-448.](https://doi.org/10.1016/j.procs.2017.10.028)
 
 ## Developers
 - Muhammad Zidan R. (EddieCrispo)
