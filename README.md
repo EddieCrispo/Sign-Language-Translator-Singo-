@@ -1,5 +1,7 @@
 # Sign-Language-Translator-Singo-
 
+[Model SinGo](https://drive.google.com/drive/folders/1rx_bqqtibDF6a7-xT7Vzh19PwYIOXMpl?usp=sharing)
+
 ## Introduction
 Sign Language Translator - Singo (Sign and Go)
 
