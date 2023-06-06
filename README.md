@@ -282,7 +282,7 @@ have't dont yet, Coming Soon.....
 * [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist)  This dataset was inspired by the Fashion-MNIST 2 and the machine learning pipeline for gestures by Sreehari 4.
 * [Datasets SIBI Sign Language Alphabets](https://www.kaggle.com/datasets/mlanangafkaar/datasets-lemlitbang-sibi-alphabets)  Indonesian Sign Language Alphabets Sign Language Datasets (Sistem Isyarat Bahasa Indonesia).
 
-## Reference
+## References
 [Bora, J., Dehingia, S., Boruah, A., Chetia, A. A., Gogoi, D. (2023). Real-time Assamese sign language recognition using MediaPipe and deep learning. Procedia Computer Science, 218, 1384-1393.](https://doi.org/10.1016/j.procs.2023.01.117)
 
 [Islam, M. M., Uddin, M. R., Akhtar, M. N., & Alam, K. M. R. (2022). Recognizing multiclass static sign language words for deaf and dumb people of Bangladesh based on transfer learning techniques. Informatics in Medicine Unlocked, 33, 101077.](https://doi.org/10.1016/j.imu.2022.101077)
