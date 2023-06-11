@@ -6,10 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.cameramenu.CameraActivity">
 
-    <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
+    <TextureView
+        android:id="@+id/textureView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:background="#000"
+        android:id="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -19,7 +25,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="@id/viewFinder"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +37,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_switch_camera" />
 
@@ -40,7 +46,7 @@
         android:layout_height="120dp"
         app:cardCornerRadius="50dp"
         app:cardBackgroundColor="@color/orange1"
-        app:layout_constraintTop_toBottomOf="@id/viewFinder"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
