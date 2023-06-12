@@ -278,6 +278,30 @@ have't dont yet, Coming Soon.....
 
 ================================================
 
+### News API
+URL = https://newsapi.org/v2/everything?qInTitle='sign language'&sortBy=publishedAt&pageSize=4&apiKey=
+
+method = GET
+
+Response 
+status ok
+totalResults:
+articles : [
+    {
+    sources: {
+        Id
+        name
+    },
+    author:
+    title:
+    description:
+    url:
+    urlToImage:
+    publishedAt:
+    content:
+    }
+]
+
 ## Reference datasets
 * [American Sign Language Dataset
 ](https://www.kaggle.com/datasets/ayuraj/asl-dataset) This dataset can be used to apply the ideas of multi class classification using the technology of your choice.
