@@ -24,16 +24,6 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main" />
-<!--        <activity-->
-<!--            android:name=".HomeActivity"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_home" />-->
-<!--        <activity-->
-<!--            android:name=".ui.informationmenu.InformationMenuActivity"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".ui.dictionary.DictionaryActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".ui.detailinformation.InformationDetailActivity"
             android:exported="false" />
