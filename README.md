@@ -164,7 +164,7 @@ cv2.destroyAllWindows()
 ## Methodology
 Overall, general method of the SLR (Sign Language Recognition) is shown below:
 
-In this project, we aim to build a CNN model that can recognize hand gestures for the letters of the alphabet, which contains training data 4,590 images, 1,350 validation data and 243 test data images, with 27 labels (A-Z) include (space character). of hand gestures. We use transfer learning to reuse a pre-trained model (VGG16) and adapt it to our specific task. We also use data augmentation to increase the diversity and size of our training data. We train and evaluate our model on the training, validation, and test data, and plot and analyze the results.
+In this project, we aim to build a CNN model that can recognize hand gestures for the letters of the alphabet, which contains training data 4,590 images, 1,350 validation data and 243 test data images, with 27 labels (A-Z) including (space character) of hand gestures. We use transfer learning to reuse a pre-trained model (VGG16) and adapt it to our specific task. We also use data augmentation to increase the diversity and size of our training data. We train and evaluate our model on the training, validation, and test data, and plot and analyze the results.
 
 ### Data Preparation
 
