@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <title>Forgot Password - Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="height: 100vh; width: 100vw">
+    <main class="conatiner bg-light p-4" style="height: 100%; width: 100%">
+      <div
+        id="d-alert"
+        class="alert alert-danger"
+        style="display: none"
+        role="alert"
+      >
+        It seems your answers did not meet the requirements or were inconsistent
+        with your previous responses.
+      </div>
+      <h5 class="h6">
+        Answer all these questions correctly, Or atleast answer any three
+        questions correctly.
+      </h5>
+      <div class="card mb-4">
+        <div class="card-body"></div>
+      </div>
+      <div class="w-100 d-flex justify-content-end">
+        <button
+          onclick="submitInputs()"
+          class="mb-4 text-center btn btn-primary"
+          style="width: 25%; max-width: 8rem"
+        >
+          Submit
+        </button>
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function () {
+        fetch(`/security-questions`)
+          .then((res) => res.json())
+          .then((data) => {
+            setCardHtm(data);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      })();
+      function setCardHtm(data) {
+        let cards = document.querySelector(".card-body");
+        for (let i = 0; i < data.length; i++) {
+          let { ask, short } = data[i];
+          let hr = i != 4 ? "<hr/>" : "";
+          cards.innerHTML += `
+         <span>
+          <h6 class="card-title">Question ${i + 1}:</h6>
+          <p id="question" class="card-text">${ask}</p>
+          <h6 class="card-title">Answer:</h6>
+          <div class="mb-4">
+            <input id="${short}" type="text" class="form-control answers" id="" />
+          </div>
+          ${hr}
+          </span>
+         `;
+        }
+      }
+      function submitInputs() {
+        let tempObj = {};
+        document.querySelectorAll(".answers").forEach((el, i) => {
+          tempObj[el.id] = el.value;
+        });
+        fetch(`/admin-forgot-password`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(tempObj),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success == true) {
+              document.querySelector("#d-alert").style.display = "none";
+              alert(data.message);
+              location.href = `${location.origin}/admin?token=${data.adminToken}`;
+              return;
+            }
+            document.documentElement.scrollTop = 0;
+            document.querySelector("#d-alert").style.display = "block";
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    </script>
+  </body>
+</html>

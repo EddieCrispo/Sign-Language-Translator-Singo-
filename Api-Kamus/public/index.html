@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Primary Meta Tags -->
+    <title>Documentation - Free Dictionary API</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="title" content="Documentation - Dictionary API" />
+    <meta
+      name="description"
+      content="Explore a fast and reliable free dictionary API with accurate word definitions. Start using our API and start leveraging language data for your project today!"
+    />
+    <meta name="keywords" content="Dictionary API", "Free dictionary API", "Word definitions API", "Synonyms and antonyms API", "Online dictionary API", "English language API" >
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://meanings.onrender.com/" />
+    <meta property="og:title" content="Documentation - Dictionary API" />
+    <meta
+      property="og:description"
+      content="Explore a fast and reliable free dictionary API with accurate word definitions. Start using our API and start leveraging language data for your project today!"
+    />
+    <meta
+      property="og:image"
+      content="https://meanings.onrender.com/image.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://meanings.onrender.com/image.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="100" />
+    <meta property="og:image:height" content="100" />
+    <meta property="og:image:alt" content="a book" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://meanings.onrender.com/"
+    />
+    <meta
+      property="twitter:title"
+      content="Documentation - Dictionary API"
+    />
+    <meta
+      property="twitter:description"
+      content="Explore a fast and reliable free dictionary API with accurate word definitions. Start using our API and start leveraging language data for your project today!"
+    />
+    <meta
+      property="twitter:image"
+      content="https://meanings.onrender.com/image.png"
+    />
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+      #myApiInput {
+        background-color: #e9e9e9;
+        border: 1px solid #cdcdcd;
+        border-radius: 6px;
+        padding: 10px;
+        height: auto;
+      }
+      #myApiInput .inputApiText {
+        min-width: 36px;
+        width: auto;
+        max-width: 100%;
+        background-color: #fff;
+        border-radius: 3px;
+        display: inline-block;
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+      [contenteditable] {
+        outline: 0px solid transparent;
+      }
+      [contenteditable]:focus {
+        outline: 0.5px solid #1275d8;
+        border-radius: 4px;
+        box-shadow: 0px 0px 2px 2px #1275d8;
+      }
+      #showResponse, .apiUrl {
+        color: #fffde7;
+        background-color: #212121;
+        font-weight: 600;
+      }
+      pre{
+        padding: 4px 5px;
+        border-radius: 4px;
+      }
+      pre .hostUrl{
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar px-md-5 bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <span class="logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-book"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"
+                />
+              </svg>
+            </span>
+            English Dictionary API
+          </a>
+          <a class="link-dark" href="https://github.com/Mirza-Glitch/simple-english-dictionary-api">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-github"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              />
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+    <div
+      id="fetchErr"
+      class="position-fixed top-0 start-0 w-100 z-2 text-center alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="display: none;"
+    >
+      There was an Error while fetching data. Please try again later.
+    </div>
+    <div
+      id="downloadErr"
+      class="position-fixed top-0 start-0 w-100 z-2 text-center alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="display: none;"
+    >
+      There was an Error while downloading word list. Please try again later.
+    </div>
+    <div
+      id="contactErr"
+      class="position-fixed top-0 start-0 w-100 z-2 text-center alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="display: none;"
+    >
+      There was an Error while trying to post your contact query details. Please try again later.
+    </div>
+    <div
+      id="contactSuccess"
+      class="position-fixed top-0 start-0 w-100 z-2 text-center alert alert-success alert-dismissible fade show"
+      role="alert"
+      style="display: none;"
+    >
+      Your query is submitted successfully.
+    </div>
+    <main class="container">
+      <div class="card m-auto mt-4 mb-4" style="width: auto; max-width: 88%">
+        <div class="card-body">
+          <h5 class="card-title">English Dictionary API</h5>
+          <p class="card-text"></p>
+          <p class="mt-4">
+            <span class="card-subtitle text-muted">Free API: </span
+            >Simple-English-Dictionary API is and always will be free. Our
+            mission is to provide users with an API that they can use our
+            provided dictionary data and also contribute their own dictionary
+            data by bringing us your query. This English Dictionary API can be
+            used for free without any API key. You do not need to register or
+            use a credit-card.
+          </p>
+          <div class="my-3">
+          <h6 class="card-title">Endpoints: </h6>
+          <p class="card-text">
+            <span class="h6">/api/:word :</span> This will return a definition on passed word param.
+            <span class="h6">/api/:word1/:word2 :</span> This will return a definition 2 words passed as param :word1 and :word2.
+            <span class="h6">/download/all/words : </span> This will return wordlist of all the words available in the API 
+            If the passed word doesn't exist in API the it will return following error object:
+            <pre style="color: #fffde7;
+        background-color: #212121;
+        font-weight: 600;">{
+  err: "word {passedWord} doesn't exist in dictionary" 
+}</pre>
+          </p>
+          </div>
+          <span class="card-subtitle text-muted">How it works: </span> The basic
+          syntax of a URL to make a get request to the API is as follows:
+          <pre class="apiUrl my-3"><span class="hostUrl text-wrap"></span>/api/:word</pre>
+          Or you can obtain two-word meanings with a single get query like:
+          <pre
+            class="apiUrl my-3"
+          ><span class="hostUrl text-wrap"></span>/api/:word1/:word2</pre>
+          <div class="mb-1">
+            <label for="basic-url" class="form-label"> Make a request: </label>
+            <div id="myApiInput">
+              <span class="hostUrl"></span> /api/
+              <div
+                id="basic-url"
+                class="inputApiText"
+                contenteditable="true"
+                style="border: none"
+              ></div>
+            </div>
+            <div class="my-2 form-text">
+              Modify the Input to check for other words too.
+            </div>
+            <button class="btn btn-primary" id="fetchBtn">Fetch URL</button>
+          </div>
+          <div>
+            <label for="basic-url" class="form-label mt-2">
+              API Response:
+            </label>
+          </div>
+          <code>
+            <pre id="showResponse" class="rounded mb-2 p-2"></pre>
+          </code>
+          <p>
+            <span class="card-subtitle text-muted">Purpose: </span> There was
+            only one free API dictionary on the market that was down for some
+            time, then I thought there should be another free one as well. So
+            after looking up a lot of dictionary data from various sources and
+            trying to make an API with it and failing again and again. I finally
+            succeeded in building this API using a json data which you can also
+            find on
+            <a href="https://github.com/nightblade9/simple-english-dictionary"
+              >this GitHub repository</a
+            >.
+          </p>
+          <p>
+            <span class="card-subtitle text-muted">Limitations: </span> Each IP address
+            has a limit of 400 queries every 10 minutes. <br />
+            This limit may be raised in the future if I receive contributions
+            for more words to this API. <br />
+            <span class="card-subtitle text-muted">Note: </span>
+             The API was created woth JSON file data, and while most words are defined, you may come across incomplete information or missing definitions. If a word is not found, the API will return an err object. To access the full wordlist, simply click on the Download Wordlist button. You can assist us with your queries and help in improving and expanding the API's data by contacting us via the <a href="#contact">contact form</a> at the bottom of the page.
+          </p>
+          <p>
+            <span class="card-subtitle text-muted">Credits: </span>
+            <a href="https://github.com/nightblade9/simple-english-dictionary"
+              >simple-english-dictionary
+            </a>
+            repo from github for providing JSON data
+          </p>
+          <div>
+            <button
+              id="downloadWords"
+              type="button"
+              onclick="downloadWordlist()"
+              class="m-2 btn btn-primary"
+            >
+              Download Wordlist
+            </button>
+          </div>
+        </div>
+      </div>
+      <section class="container container-fluid" id="contact">
+          <div class="mx-auto my-4 card p-auto" style="width: auto; max-width: 94%;">
+          <div class="card-body">
+              <p class="h5">Get In Touch</p>
+              <p class="card-text">
+                If you have any questions or issues with simple english dictionary API, please contact us by filling this form:
+              </p>
+              <div class="input-group mb-2">
+              <input type="email" class="mb-1 form-control" id="email" placeholder="Email address" required>
+                <div id="invalidEmail" class="invalid-feedback">
+                  Please provide correct email address.
+                </div>
+              </div>
+              <div class="input-group mb-2">
+              <input type="text" class="form-control" id="subject" placeholder="subject regarding...">
+              </div>
+              <div class="input-group">
+              <textarea class="form-control" id="message" placeholder="your query..." rows="3" required></textarea>
+              <div id="invalidEmail" class="invalid-feedback">
+                  Message should contain atleast 10 characters.
+                </div>
+              </div>
+            </div>
+          <div style="
+          width:auto;
+          margin: 10px;
+          display:flex;
+          margin-left: 55%;
+          ">
+            <button
+              type="button"
+              id="submitBtn"
+              class="btn btn-primary"
+            >
+              Submit form
+            </button>
+          </div>
+        </div>
+      <section>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/script.js"></script>
+  </body>
+</html>
