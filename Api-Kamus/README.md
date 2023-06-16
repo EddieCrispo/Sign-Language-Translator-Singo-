@@ -46,7 +46,7 @@ API Endpoint: https://meanings.onrender.com/api/:word
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Mirza-Glitch/simple-english-dictionary-api](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-.git
+git clone https://github.com/EddieCrispo/Sign-Language-Translator-Singo-.git
 ```
 
 2. cd:
