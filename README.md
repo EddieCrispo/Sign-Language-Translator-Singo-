@@ -281,11 +281,12 @@ have't dont yet, Coming Soon.....
 ### News API
 - URL = https://newsapi.org/v2/everything?qInTitle='sign language'&sortBy=publishedAt&pageSize=4&apiKey=
 - endpoint = /v2/everything = search every article published by over 80,000 different sources large and small in the last 5 years.
-- parameters = qInTittle: Keywords or phrases to search from title.
+- parameters =
+qInTittle: Keywords or phrases to search from title.
 
-             sortBy: The order to sort the articles in newest articles come first.
-  
-             pageSize: The number of results to return per page.
+sortBy: The order to sort the articles in newest articles come first.
+
+pageSize: The number of results to return per page.
              
 - method = GET
 
