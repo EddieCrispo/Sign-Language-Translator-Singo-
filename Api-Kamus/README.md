@@ -3,8 +3,6 @@
 
 The Simple English Dictionary API is a user-friendly tool that offers straightforward definitions for words. It is also customizable, allowing for self-hosting to meet specific requirements. With over more than 121k words, the API contains vast amount of data.
 
-This project was inspired by [simple-english-dictionary](https://github.com/nightblade9/simple-english-dictionary) on GitHub. The output files were obtained from [tusharlock10's dictionary repo](https://github.com/tusharlock10/Dictionary) and uploaded to [Dropbox](https://www.dropbox.com/s/qjdgnf6npiqymgs/data.7z?dl=1).
-
 ## Features
 
 - Provides simple English definitions for words
@@ -48,13 +46,13 @@ API Endpoint: https://meanings.onrender.com/api/:word
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Mirza-Glitch/simple-english-dictionary-api.git
+git clone https://github.com/Mirza-Glitch/simple-english-dictionary-api](https://github.com/EddieCrispo/Sign-Language-Translator-Singo-.git
 ```
 
 2. cd:
 
 ```bash
-cd simple-english-dictionary-api
+cd Sign-Language-Translator-Singo-
 ```
 
 3. Install dependencies:
@@ -128,12 +126,3 @@ You can also add another parameter for second word like:
 This will fetch data for word 'a' and also for 'b'
 
 You can also visit the official website for [documentation](https://meanings.onrender.com)
-
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Mirza-Glitch/simple-english-dictionary-api/blob/main/LICENSE) file for details.
-
-## Acknowledgements
-
-This project was created by [Mirza-Glitch](https://github.com/Mirza-Glitch).
