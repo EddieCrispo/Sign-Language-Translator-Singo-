@@ -1,275 +1,181 @@
 package com.captsoneteamsingo.ui.cameramenu
 
-import ObjectDetectorsHelper
-import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.provider.MediaStore
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.captsoneteamsingo.databinding.ActivityCameraBinding
-import org.tensorflow.lite.task.vision.detector.Detection
-import java.util.LinkedList
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import com.captsoneteamsingo.R
+import com.captsoneteamsingo.ml.ConvertedModel
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
-class CameraActivity : AppCompatActivity(), ObjectDetectorsHelper.DetectorListener {
 
-    private val TAG = "ObjectDetection"
+class CameraActivity : AppCompatActivity() {
 
-    private lateinit var cameraBinding: ActivityCameraBinding
-    private lateinit var objectDetectorHelper: ObjectDetectorsHelper
-    private lateinit var bitmapBuffer: Bitmap
-    private var preview: Preview? = null
-    private var imageAnalyzer: ImageAnalysis? = null
-    private var camera: Camera? = null
-    private var cameraProvider: ProcessCameraProvider? = null
+    private lateinit var camera: Button
+    private lateinit var gallery: Button
+    private lateinit var imageView: ImageView
+    private lateinit var result: TextView
+    private val imageSize = 224
 
-    /** Blocking camera operations are performed using this executor */
-    private lateinit var cameraExecutor: ExecutorService
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 3
+        private const val REQUEST_IMAGE_GALLERY = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraBinding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(cameraBinding.root)
+        setContentView(R.layout.activity_camera)
 
-        objectDetectorHelper = ObjectDetectorsHelper(
-            context = this,
-            objectDetectorListener = this
-        )
+        camera = findViewById(R.id.button)
+        gallery = findViewById(R.id.button2)
+        result = findViewById(R.id.result)
+        imageView = findViewById(R.id.imageView)
 
-        // Initialize our background executor
-        cameraExecutor = Executors.newSingleThreadExecutor()
-
-        // Wait for the views to be properly laid out
-        cameraBinding.viewFinder.post {
-            // Set up the camera and its use cases
-            setUpCamera()
+        camera.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { cameraIntent ->
+                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    100
+                )
+            }
         }
 
-        // Attach listeners to UI control widgets
-        //initBottomSheetControls()
+        gallery.setOnClickListener {
+            val galeryIntent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galeryIntent, REQUEST_IMAGE_GALLERY)
+        }
+
+        supportActionBar?.hide()
     }
 
-//    private fun initBottomSheetControls() {
-//        // When clicked, lower detection score threshold floor
-//        cameraBinding.bottomSheetLayout.thresholdMinus.setOnClickListener {
-//            if (objectDetectorHelper.threshold >= 0.1) {
-//                objectDetectorHelper.threshold -= 0.1f
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, raise detection score threshold floor
-//        cameraBinding.bottomSheetLayout.thresholdPlus.setOnClickListener {
-//            if (objectDetectorHelper.threshold <= 0.8) {
-//                objectDetectorHelper.threshold += 0.1f
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, reduce the number of objects that can be detected at a time
-//        cameraBinding.bottomSheetLayout.maxResultsMinus.setOnClickListener {
-//            if (objectDetectorHelper.maxResults > 1) {
-//                objectDetectorHelper.maxResults--
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, increase the number of objects that can be detected at a time
-//        cameraBinding.bottomSheetLayout.maxResultsPlus.setOnClickListener {
-//            if (objectDetectorHelper.maxResults < 5) {
-//                objectDetectorHelper.maxResults++
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, decrease the number of threads used for detection
-//        cameraBinding.bottomSheetLayout.threadsMinus.setOnClickListener {
-//            if (objectDetectorHelper.numThreads > 1) {
-//                objectDetectorHelper.numThreads--
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, increase the number of threads used for detection
-//        cameraBinding.bottomSheetLayout.threadsPlus.setOnClickListener {
-//            if (objectDetectorHelper.numThreads < 4) {
-//                objectDetectorHelper.numThreads++
-//                updateControlsUi()
-//            }
-//        }
-//
-//        // When clicked, change the underlying hardware used for inference. Current options are CPU
-//        // GPU, and NNAPI
-//        cameraBinding.bottomSheetLayout.spinnerDelegate.setSelection(0, false)
-//        cameraBinding.bottomSheetLayout.spinnerDelegate.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                    objectDetectorHelper.currentDelegate = p2
-//                    updateControlsUi()
-//                }
-//
-//                override fun onNothingSelected(p0: AdapterView<*>?) {
-//                    /* no op */
-//                }
-//            }
-//
-//        // When clicked, change the underlying model used for object detection
-//        cameraBinding.bottomSheetLayout.spinnerModel.setSelection(0, false)
-//        cameraBinding.bottomSheetLayout.spinnerModel.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                    objectDetectorHelper.currentModel = p2
-//                    updateControlsUi()
-//                }
-//
-//                override fun onNothingSelected(p0: AdapterView<*>?) {
-//                    /* no op */
-//                }
-//            }
-//    }
+    private fun classifyImage(image: Bitmap) {
+        try {
+            val model = ConvertedModel.newInstance(applicationContext)
 
-    // Update the values displayed in the bottom sheet. Reset detector.
-    private fun updateControlsUi() {
-//        cameraBinding.bottomSheetLayout.maxResultsValue.text =
-//            objectDetectorHelper.maxResults.toString()
-//        cameraBinding.bottomSheetLayout.thresholdValue.text =
-//            String.format("%.2f", objectDetectorHelper.threshold)
-//        cameraBinding.bottomSheetLayout.threadsValue.text =
-//            objectDetectorHelper.numThreads.toString()
+            // Creates inputs for reference.
+            val inputFeature0 =
+                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
+            byteBuffer.order(ByteOrder.nativeOrder())
 
-        // Needs to be cleared instead of reinitialized because the GPU
-        // delegate needs to be initialized on the thread using it when applicable
-        objectDetectorHelper.clearObjectDetector()
-        cameraBinding.overlay.clear()
+            val intValues = IntArray(imageSize * imageSize)
+            image.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
+            var pixel = 0
+            //iterate over each pixel and extract R, G, and B values. Add those values individually to the byte buffer.
+            //iterate over each pixel and extract R, G, and B values. Add those values individually to the byte buffer.
+            for (i in 0 until imageSize) {
+                for (j in 0 until imageSize) {
+                    val `val` = intValues[pixel++] // RGB
+                    byteBuffer.putFloat((`val` shr 16 and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat((`val` shr 8 and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 255))
+                }
+            }
+
+            inputFeature0.loadBuffer(byteBuffer)
+
+            // Runs model inference and gets result.
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            val confidences = outputFeature0.floatArray
+            // find the index of the class with the biggest confidence.
+            // find the index of the class with the biggest confidence.
+            var maxPos = 0
+            var maxConfidence = 0f
+            for (i in confidences.indices) {
+                if (confidences[i] > maxConfidence) {
+                    maxConfidence = confidences[i]
+                    maxPos = i
+                }
+            }
+            val classes = arrayOf(
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "l",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z",
+                "Spasi"
+            )
+            result.text = classes[maxPos]
+
+            // Releases model resources if no longer used.
+
+            // Releases model resources if no longer used.
+            model.close()
+        } catch (e: IOException) {
+            // TODO Handle the exception
+        }
     }
 
-    // Initialize CameraX, and prepare to bind the camera use cases
-    private fun setUpCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener(
-            {
-                // CameraProvider
-                cameraProvider = cameraProviderFuture.get()
-
-                // Build and bind the camera use cases
-                bindCameraUseCases()
-            },
-            ContextCompat.getMainExecutor(this)
-        )
-    }
-
-    // Declare and bind preview, capture and analysis use cases
-    @SuppressLint("UnsafeOptInUsageError")
-    private fun bindCameraUseCases() {
-
-        // CameraProvider
-        val cameraProvider =
-            cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
-
-        // CameraSelector - makes assumption that we're only using the back camera
-        val cameraSelector =
-            CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
-
-        // Preview. Only using the 4:3 ratio because this is the closest to our models
-        preview =
-            Preview.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(cameraBinding.viewFinder.display.rotation)
-                .build()
-
-        // ImageAnalysis. Using RGBA 8888 to match how our models work
-        imageAnalyzer =
-            ImageAnalysis.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(cameraBinding.viewFinder.display.rotation)
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_RGBA_8888)
-                .build()
-                // The analyzer can then be assigned to the instance
-                .also {
-                    it.setAnalyzer(cameraExecutor) { image ->
-                        if (!::bitmapBuffer.isInitialized) {
-                            // The image rotation and RGB image buffer are initialized only once
-                            // the analyzer has started running
-                            bitmapBuffer = Bitmap.createBitmap(
-                                image.width,
-                                image.height,
-                                Bitmap.Config.ARGB_8888
-                            )
-                        }
-
-                        detectObjects(image)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    val image = data?.extras?.get("data") as Bitmap
+                    val dimension = Math.min(image.width, image.height)
+                    val thumbnailImage = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
+                    imageView.setImageBitmap(thumbnailImage)
+                    classifyImage(thumbnailImage)
+                }
+                REQUEST_IMAGE_GALLERY -> {
+                    val uri = data?.data
+                    val image = uri?.let { MediaStore.Images.Media.getBitmap(contentResolver, it) }
+                    image?.let {
+                        val dimension = Math.min(it.width, it.height)
+                        val thumbnailImage =
+                            ThumbnailUtils.extractThumbnail(it, dimension, dimension)
+                        imageView.setImageBitmap(thumbnailImage)
+                        classifyImage(thumbnailImage)
                     }
                 }
-
-        // Must unbind the use-cases before rebinding them
-        cameraProvider.unbindAll()
-
-        try {
-            // A variable number of use-cases can be passed here -
-            // camera provides access to CameraControl & CameraInfo
-            camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
-
-            // Attach the viewfinder's surface provider to preview use case
-            preview?.setSurfaceProvider(cameraBinding.viewFinder.surfaceProvider)
-        } catch (exc: Exception) {
-            Log.e(TAG, "Use case binding failed", exc)
+            }
         }
-    }
-
-    private fun detectObjects(image: ImageProxy) {
-        // Copy out RGB bits to the shared bitmap buffer
-        image.use { bitmapBuffer.copyPixelsFromBuffer(image.planes[0].buffer) }
-
-        val imageRotation = image.imageInfo.rotationDegrees
-        // Pass Bitmap and rotation to the object detector helper for processing and detection
-        objectDetectorHelper.detect(bitmapBuffer, imageRotation)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        imageAnalyzer?.targetRotation = cameraBinding.viewFinder.display.rotation
-    }
-
-    // Update UI after objects have been detected. Extracts original image height/width
-    // to scale and place bounding boxes properly through OverlayView
-    override fun onResults(
-        results: MutableList<Detection>?,
-        inferenceTime: Long,
-        imageHeight: Int,
-        imageWidth: Int
-    ) {
-        runOnUiThread {
-//            cameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-//                String.format("%d ms", inferenceTime)
-
-            // Pass necessary information to OverlayView for drawing on the canvas
-            cameraBinding.overlay.setResults(
-                results ?: LinkedList<Detection>(),
-                imageHeight,
-                imageWidth
-            )
-
-            // Force a redraw
-            cameraBinding.overlay.invalidate()
-        }
-    }
-
-    override fun onError(error: String) {
-        runOnUiThread {
-            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
